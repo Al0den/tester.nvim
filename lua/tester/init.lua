@@ -5,6 +5,8 @@ local function setup()
     vim.api.nvim_create_user_command("TesterTrash",
         function(opts) require "tester".open_window(opts.fargs[1]) end,
         { nargs = "?" })
+    vim.api.nvim_create_user_command("TesterClear", "lua require 'tester'.clear_tester()", {})
+    vim.api.nvim_create_user_command("TesterHide", "lua require'tester'.hide_window()", {})
 end
 
 local currentOpened = {}
