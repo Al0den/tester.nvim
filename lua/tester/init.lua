@@ -2,7 +2,8 @@ require("utils")
 require("tester.filetype")
 
 local function setup()
-    vim.api.nvim_create_user_command("TesterTrash", function(opts) require "tester".open_window(opts.fargs[1]) end,
+    vim.api.nvim_create_user_command("TesterTrash",
+        function(opts) require "tester".open_window(opts.fargs[1], opts.fargs[2]) end,
         { nargs = "?" })
 end
 
