@@ -29,7 +29,7 @@ vim.keymap.set("n", "<leader>tc", function()
 end)
 
 --Let the plugin decide filetype, but force direction as horizontal
---The plugin treats & as no arguments for the selected parameter
+--The plugin treats & as no arguments, treated as default setting for the selected parameter
 vim.keymap.set("n", "<leader>th", function()
   vim.api.nvim_command("TesterTrash & horizontal")
 end)
