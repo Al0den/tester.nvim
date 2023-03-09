@@ -22,8 +22,10 @@ local function create_file(path)
     io.close(file)
 end
 
+local default = "vertical"
+
 local function start_window(dir, path)
-    if dir == "horizontal" then
+    if dir == "horizontal" or (default == "horizontal" and dir ~= "horizontal") then
         vim.cmd("split" .. path)
     else
         vim.cmd("vsplit" .. path)
