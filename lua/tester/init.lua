@@ -9,7 +9,7 @@ end
 local askForType = { ".tex" }
 
 local function add_special_type(type)
-    table.insert(askForType, type)
+    table.insert(askForType, "." .. type)
 end
 
 local function create_file(path)
