@@ -3,7 +3,7 @@ require("tester.filetype")
 
 local function setup()
     vim.api.nvim_create_user_command("TesterTrash",
-        function(opts) require "tester".open_window(opts.fargs[1], opts.fargs[2]) end,
+        function(opts) require "tester".open_window(opts.fargs[1]) end,
         { nargs = "?" })
 end
 
@@ -18,16 +18,12 @@ local function create_file(path)
     io.close(file)
 end
 
-local function open_window(type, dir)
+local function open_window(type)
     local path = init(type, askForType)
     if not file_exists(path) then
         create_file(path)
     end
-    if (dir == "horizontal") then
-        vim.cmd("split" .. path)
-    else
-        vim.cmd('vsplit ' .. path)
-    end
+    vim.cmd('vsplit ' .. path)
     vim.bo.bufhidden = "delete"
 end
 
