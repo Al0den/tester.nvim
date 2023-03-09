@@ -7,6 +7,8 @@ local function setup()
         { nargs = "?" })
 end
 
+local currentOpened = {}
+
 local askForType = { ".tex" }
 
 local function add_special_type(type)
@@ -16,6 +18,14 @@ end
 local function create_file(path)
     local file = assert(io.open(path, "w"))
     io.close(file)
+end
+
+local function start_window(dir, path)
+    if dir == "horizontal" then
+        vim.cmd("split" .. path)
+    else
+        vim.cmd("vsplit" .. path)
+    end
 end
 
 local function open_window(args)
@@ -31,22 +41,31 @@ local function open_window(args)
     local type = arg[1]
     local dir = arg[2]
     local path = init(type, askForType)
-    if not file_exists(path) then
-        create_file(path)
-    end
-    if (dir == "horizontal") then
-        vim.cmd("split " .. path)
+    local ext = getFileExtension(path)
+
+    if currentOpened[ext] ~= nil then
+        start_window(dir, currentOpened[ext])
     else
-        vim.cmd("vsplit " .. path)
+        create_file(path)
+        start_window(dir, path)
+        currentOpened[ext] = path
     end
     vim.bo.bufhidden = "delete"
 end
 
 local function hide_window()
-    local path = vim.api.nvim_buf_get_name(0)
     local currBuff = get_file_name(vim.api.nvim_buf_get_name(0))
     if stringStartsWith(currBuff, "trash") then
         vim.api.nvim_command(":x")
+    end
+end
+
+local function clear_tester()
+    local curr = vim.api.nvim_buf_get_name(0)
+    currentOpened = {}
+    if stringStartsWith(get_file_name(curr), "trash") then
+        vim.api.nvim_command(":x")
+        open_window("&")
     end
 end
 
@@ -54,5 +73,6 @@ return {
     open_window = open_window,
     setup = setup,
     add_special_type = add_special_type,
-    hide_window = hide_window
+    hide_window = hide_window,
+    clear_tester = clear_tester
 }

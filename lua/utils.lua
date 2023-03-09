@@ -26,10 +26,28 @@ function get_file_name(file)
     return file_name:sub(0, #file_name - 4)
 end
 
+function exists(file)
+    local ok, err, code = os.rename(file, file)
+    if not ok then
+        if code == 13 then
+            -- Permission denied, but it exists
+            return true
+        end
+    end
+    return ok, err
+end
+
+--- Check if a directory exists in this path
+function isdir(path)
+    -- "/" works on both Unix and Windows
+    return exists(path .. "/")
+end
+
 return {
     file_exists = file_exists,
     getFileExtension = getFileExtension,
     has_value = has_value,
     stringStartsWith = stringStartsWith,
-    get_file_name = get_file_name
+    get_file_name = get_file_name,
+    isdir = isdir
 }
