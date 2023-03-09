@@ -2,9 +2,9 @@ function init(type, tbl)
     local current_type
     local current_file = vim.api.nvim_buf_get_name(0)
     local extension = getFileExtension(current_file)
-    if type ~= nil then
+    if type ~= nil and type ~= "default" then
         current_type = "." .. type
-    elseif has_value(tbl, extension) then
+    elseif has_value(tbl, extension) or type == "ask" then
         local name = vim.fn.input("Type: ", "", "file")
         current_type = "." .. name
     else

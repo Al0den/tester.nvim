@@ -22,6 +22,9 @@ local function open_window(args)
     local arg = {}
     if (args ~= nil) then
         for i in string.gmatch(args, "%S+") do
+            if (i == "&") then
+                i = "default"
+            end
             table.insert(arg, i)
         end
     end
