@@ -18,12 +18,24 @@ local function create_file(path)
     io.close(file)
 end
 
-local function open_window(type)
+local function open_window(args)
+    local arg = {}
+    if (args ~= nil) then
+        for i in string.gmatch(args, "%S+") do
+            table.insert(arg, i)
+        end
+    end
+    local type = arg[1]
+    local dir = arg[2]
     local path = init(type, askForType)
     if not file_exists(path) then
         create_file(path)
     end
-    vim.cmd('vsplit ' .. path)
+    if (dir == "horizontal") then
+        vim.cmd("split " .. path)
+    else
+        vim.cmd("vsplit " .. path)
+    end
     vim.bo.bufhidden = "delete"
 end
 
