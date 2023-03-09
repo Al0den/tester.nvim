@@ -33,5 +33,10 @@ end)
 vim.keymap.set("n", "<leader>th", function()
   vim.api.nvim_command("TesterTrash & horizontal")
 end)
+
+--Plugin can also ask the user which filetype he wants to use, as such
+vim/keymap.set("n", "<leader>ta", function()
+  vim.api.nvim_command("TesterTrash ask &")
+end)
 ```
 
