@@ -4,7 +4,7 @@ Simple lightweight plugin for quick testing
 
 ## Installation and setup
 
-Any plugin manager should do the trick, but calling the setup function is required to access the functions
+Any plugin manager should do the trick, but calling the setup function is required to access the functions as normal commands
 
 **Packer**
 ```lua
