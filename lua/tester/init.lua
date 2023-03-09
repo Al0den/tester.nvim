@@ -42,8 +42,17 @@ local function open_window(args)
     vim.bo.bufhidden = "delete"
 end
 
+local function hide_window()
+    local path = vim.api.nvim_buf_get_name(0)
+    local currBuff = get_file_name(vim.api.nvim_buf_get_name(0))
+    if stringStartsWith(currBuff, "trash") then
+        vim.api.nvim_command(":x")
+    end
+end
+
 return {
     open_window = open_window,
     setup = setup,
-    add_special_type = add_special_type
+    add_special_type = add_special_type,
+    hide_window = hide_window
 }

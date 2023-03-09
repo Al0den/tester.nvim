@@ -17,8 +17,19 @@ function has_value(tab, val)
     return false
 end
 
+function stringStartsWith(str, beg)
+    return str:find("^" .. beg) ~= nil
+end
+
+function get_file_name(file)
+    local file_name = file:match("[^/]*.lua$")
+    return file_name:sub(0, #file_name - 4)
+end
+
 return {
     file_exists = file_exists,
     getFileExtension = getFileExtension,
-    has_value = has_value
+    has_value = has_value,
+    stringStartsWith = stringStartsWith,
+    get_file_name = get_file_name
 }
