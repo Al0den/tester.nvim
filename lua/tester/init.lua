@@ -17,13 +17,16 @@ local function create_file(path)
     io.close(file)
 end
 
-local function open_window(type)
+local function open_window(type, dir)
     local path = init(type, askForType)
     if not file_exists(path) then
         create_file(path)
     end
-
-    vim.cmd('vsplit ' .. path)
+    if (dir == "horizontal") then
+        vim.cmd("split" .. path)
+    else
+        vim.cmd('vsplit ' .. path)
+    end
     vim.bo.bufhidden = "delete"
 end
 
