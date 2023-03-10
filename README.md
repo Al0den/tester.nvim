@@ -54,7 +54,14 @@ require"tester".hide_window()
 
 --Clear all test windows
 require"tester".clear_tester()
+
+--Add a filetype in which the user will be explicitely asked what type the test file needs to be
+require"tester".add_special_type(type)
+--type being a string, defaults are "tex"
+
 ```
+
+
 
 All of those commands are directly available as user command, as such:
 ```lua
