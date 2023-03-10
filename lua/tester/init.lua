@@ -6,7 +6,7 @@ local path = vim.fn.stdpath("run") .. "/trash"
 local M = {}
 
 M.setup = function(opts)
-    M.opts = opts or {}
+    M.opts = opts or { dir = "vertical" }
     M.opts.askForType = M.opts.askForType or { ".tex" }
 end
 
@@ -33,8 +33,9 @@ M.isOpened = function()
 end
 
 M.open = function(args)
-    local type = args["type"] or init(M)
-    local dir = args["dir"] or "vsplit"
+    arg = args or {}
+    local type = arg["type"] or init(M)
+    local dir = arg["dir"] or "vsplit"
     if M.isOpened() then
         vim.fn.win_gotoid(M.isOpened())
     else
