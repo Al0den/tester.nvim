@@ -1,7 +1,13 @@
 require("utils")
 require("tester.filetype")
 
-local function setup()
+
+local defaultDir = "vertical"
+
+local function setup(dir)
+    if (dir ~= nil) then
+        defaultDir = dir
+    end
     vim.api.nvim_create_user_command("TesterTrash",
         function(opts) require "tester".open_window(opts.fargs[1]) end,
         { nargs = "?" })
@@ -22,10 +28,8 @@ local function create_file(path)
     io.close(file)
 end
 
-local default = "vertical"
-
 local function start_window(dir, path)
-    if dir == "horizontal" or (default == "horizontal" and dir ~= "horizontal") then
+    if dir == "horizontal" or (defaultDir == "horizontal" and dir ~= "horizontal") then
         vim.cmd("split" .. path)
     else
         vim.cmd("vsplit" .. path)
