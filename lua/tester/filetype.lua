@@ -1,17 +1,15 @@
-function init(type, tbl)
+function init(M)
+    local tbl = M.opts.askForType
     local current_type
     local current_file = vim.api.nvim_buf_get_name(0)
     local extension = getFileExtension(current_file)
-    if type ~= nil and type ~= "default" then
-        current_type = "." .. type
-    elseif has_value(tbl, extension) or type == "ask" then
+    if has_value(tbl, extension) or type == "ask" then
         local name = vim.fn.input("Type: ", "", "file")
         current_type = "." .. name
     else
         current_type = extension
     end
-    local path = vim.fn.stdpath('run') .. "/trash" .. current_type
-    return path
+    return current_type
 end
 
 return {

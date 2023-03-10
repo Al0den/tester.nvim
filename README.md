@@ -30,42 +30,29 @@ Note: Setup function can be called from anywhere at anytime, lazy-loading should
 ## How to use
 
 ```lua
---Default behavior, lets the plugin decide filetype, and use vertical as direction
-vim.keymap.set("n", "<leader>t", vim.api.nvim_command("TesterTrash"))
+--Open a new trash window using default settings
+vim.keymap.set("n", "<leader>te", require"tester".open())
 
---Specified filetype and direction
-vim.keymap.set("n", "<leader>tc", vim.api.nvim_command("TesterTrash c horizontal"))
-
---Let the plugin decide filetype, but force direction as horizontal
---The plugin treats & as no arguments, treated as default setting for the selected parameter
-vim.keymap.set("n", "<leader>th", vim.api.nvim_command("TesterTrash & horizontal"))
-
---Plugin can also ask the user which filetype he wants to use, as such
-vim/keymap.set("n", "<leader>ta", vim.api.nvim_command("TesterTrash ask &"))
-)
+--Clear all open testing windows
+vim.keymap.set("n", "<leader>tc", require"tester".clear())
 ```
 
 ## Customization
 
 The default setup is required and comes with no options at the time being, however some feature are configurable after plugin load
 ```lua
---Hide window, for the time being only a window close shortcut 
-require"tester".hide_window()
+-- the setup() function doesnt need to be called with any parameters, and the defaults are:
+require"tester".setup({
+    defaultDir = "vsplit", -- "vsplit" | "split"
+    askForType = { ".tex" } --Any string will work if the files ends with this particular string
+})
 
---Clear all test windows
-require"tester".clear_tester()
-
---Add a filetype in which the user will be explicitely asked what type the test file needs to be
-require"tester".add_special_type(type)
---type being a string, defaults are "tex"
-
+--Same thing for the open() function
+require"tester".open({
+    dir = "vsplit", --If no dir is specified, defaultDir from the setup() function will be used
+    type = ".c" --If no type is specified, and current file type isnt in askForType from the setup function, the current type will be used
+})
 ```
 
 
-
-Most of those commands are directly available as user command, as such:
-```lua
-vim.keymap.set("n", "<leader>tc", vim.api.nvim_command(":TesterHide"))
-vim.keymap.set("n", "<leader>tc", vim.api.nvim_command(":TesterClear"))
-```
 
