@@ -6,7 +6,7 @@ Simple lightweight plugin for quick testing
 
 Any plugin manager should do the trick, but calling the setup function is required to access the functions as normal commands
 
-**Packer**
+**packer.nvim**
 ```lua
 use { "Al0den/tester.nvim",
   config = function()
@@ -14,6 +14,18 @@ use { "Al0den/tester.nvim",
   end
 }
 ```
+
+**vim-plug**
+```lua
+Plug 'Al0den/tester.nvim'
+
+lua << END
+require('tester').setup()
+END
+
+```
+
+Note: Setup function can be called from anywhere at anytime, lazy-loading shouldnt affect it
 
 ## How to use
 
@@ -46,7 +58,7 @@ require"tester".clear_tester()
 
 All of those commands are directly available as user command, as such:
 ```lua
-vim.keymap.set("n", "<leader>tc", vim.api.nvim_Command(":TesterHide"))
+vim.keymap.set("n", "<leader>tc", vim.api.nvim_command(":TesterHide"))
 vim.keymap.set("n", "<leader>tc", vim.api.nvim_command(":TesterClear"))
 ```
 
