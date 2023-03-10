@@ -63,7 +63,7 @@ require"tester".add_special_type(type)
 
 
 
-All of those commands are directly available as user command, as such:
+Most of those commands are directly available as user command, as such:
 ```lua
 vim.keymap.set("n", "<leader>tc", vim.api.nvim_command(":TesterHide"))
 vim.keymap.set("n", "<leader>tc", vim.api.nvim_command(":TesterClear"))
