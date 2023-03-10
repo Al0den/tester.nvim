@@ -16,7 +16,7 @@ use { "Al0den/tester.nvim",
 ```
 
 **vim-plug**
-```lua
+```vimscript
 Plug 'Al0den/tester.nvim'
 
 lua << END
