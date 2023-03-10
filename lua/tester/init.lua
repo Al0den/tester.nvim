@@ -23,8 +23,7 @@ local function getCurrentBuffers()
 end
 
 M.isOpened = function()
-    local bufferList = getCurrentBuffers()
-    for _, buff in pairs(bufferList) do
+    for _, buff in pairs(getCurrentBuffers()) do
         local ok, _ = pcall(vim.api.nvim_buf_get_var, buff, "owner")
         if ok and vim.fn.bufwinid(buff) ~= -1 then
             return vim.fn.bufwinid(buff)
@@ -40,9 +39,24 @@ M.open = function(args)
         vim.fn.win_gotoid(M.isOpened())
     else
         create_file(path .. type)
-        print(path .. type)
         vim.cmd(dir .. " " .. path .. type)
         vim.api.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
+        vim.bo.bufhidden = "delete"
+    end
+end
+
+M.clear = function()
+    for _, buff in ipairs(getCurrentBuffers()) do
+        local ok, _ = pcall(vim.api.nvim_buf_get_var, buff, "owner")
+        if ok then
+            local ext = getFileExtension(vim.api.nvim_buf_get_name(buff))
+            local stat = vim.fn.bufwinid(buff)
+            os.remove(vim.api.nvim_buf_get_name(buff))
+            va.nvim_win_close(M.isOpened(), 0)
+            if stat ~= 1 then
+                M.open({ type = ext })
+            end
+        end
     end
 end
 
