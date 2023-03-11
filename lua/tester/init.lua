@@ -1,5 +1,6 @@
 require("utils")
 require("tester.filetype")
+
 local va = vim.api
 local path = vim.fn.stdpath("run") .. "/trash"
 
@@ -34,7 +35,7 @@ end
 
 M.open = function(args)
     arg = args or {}
-    local type = arg["type"] or init(M)
+    local type = getType(M, arg)
     local dir = arg["dir"] or "vsplit"
     if M.isOpened() then
         vim.fn.win_gotoid(M.isOpened())

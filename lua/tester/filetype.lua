@@ -1,4 +1,4 @@
-function init(M)
+local function init(M)
     local tbl = M.opts.askForType
     local current_type
     local current_file = vim.api.nvim_buf_get_name(0)
@@ -12,6 +12,19 @@ function init(M)
     return current_type
 end
 
-return {
-    init = init
-}
+local function askForType()
+    local name = vim.fn.input("Type: ", "", "file")
+    return name
+end
+
+function getType(M, arg)
+    local type
+    if arg["type"] == "ask" then
+        type = "." .. askForType()
+    else
+        type = init(M)
+    end
+    return type
+end
+
+return getType
