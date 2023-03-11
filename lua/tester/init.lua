@@ -41,6 +41,7 @@ M.open = function(args)
     else
         create_file(path .. type)
         vim.cmd(dir .. " " .. path .. type)
+        print(path .. type)
         vim.api.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
         vim.bo.bufhidden = "delete"
     end
