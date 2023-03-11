@@ -11,6 +11,10 @@ M.setup = function(opts)
     M.opts.askForType = M.opts.askForType or { ".tex" }
 end
 
+local function winbg()
+    vim.cmd [[set winhighlight=Normal:testerNormal,EndOfBuffer:testerNormal,SignColumn:testerNormal ]]
+end
+
 local function create_file(path)
     local file = assert(io.open(path, "w"))
     io.close(file)
@@ -45,6 +49,7 @@ M.open = function(args)
         print(path .. type)
         vim.api.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
         vim.bo.bufhidden = "delete"
+        winbg()
     end
 end
 

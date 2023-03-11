@@ -31,10 +31,10 @@ Note: Setup function can be called from anywhere at anytime, lazy-loading should
 
 ```lua
 --Open a new trash window using default settings
-vim.keymap.set("n", "<leader>te", require"tester".open())
+vim.keymap.set("n", "<leader>te", require"tester".open)
 
 --Clear all open testing windows
-vim.keymap.set("n", "<leader>tc", require"tester".clear())
+vim.keymap.set("n", "<leader>tc", require"tester".clear)
 ```
 
 ## Customization
@@ -52,6 +52,10 @@ require"tester".open({
     dir = "vsplit", --If no dir is specified, defaultDir from the setup() function will be used
     type = ".c" --If no type is specified, and current file type isnt in askForType from the setup function, the current type will be used
 })
+
+--If you want to make the tester window more distinguishable from the others, you can use your own highlight group
+vim.api.nvim_set_hl(0, "testerNormal", { bg = "red"})
+
 ```
 
 
