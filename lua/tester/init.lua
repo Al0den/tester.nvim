@@ -79,7 +79,7 @@ M.clear = function()
             local stat = vim.fn.bufwinid(buff)
             os.remove(vim.api.nvim_buf_get_name(buff))
             va.nvim_win_close(M.isOpened(), 0)
-            if stat ~= 1 then M.open({ type = ext }) end
+            if stat ~= 1 then M.open({ type = ext:sub(2) }) end
         end
     end
 end
