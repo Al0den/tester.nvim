@@ -8,7 +8,8 @@ Any plugin manager should do the trick, but calling the setup function is requir
 
 **packer.nvim**
 ```lua
-use { "Al0den/tester.nvim",
+use { 
+  "Al0den/tester.nvim",
   config = function()
     require"tester".setup()
   end
