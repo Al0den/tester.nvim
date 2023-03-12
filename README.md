@@ -42,13 +42,18 @@ vim.keymap.set("n", "<leader>tc", require"tester".clear)
 
 The default setup is required and comes with no options at the time being, however some feature are configurable after plugin load
 ```lua
--- the setup() function doesnt need to be called with any parameters, and the defaults are:
+-- The setup() function doesnt need to be called with any parameters, and the defaults are:
 require"tester".setup({
     defaultDir = "vsplit", -- "vsplit" | "split"
-    askForType = { ".tex" } --Any string will work if the files ends with this particular string
+    askForType = { ".tex" }, --Any string will work if the files ends with this particular string
+    --Default file content when creating a new trash window, "@" represents cursor position, and isn't required
+    defaultContent = {
+      c = "#include<stdio.h>\n#include<stdlib.h>\n#include<assert.h>\n\nint main() {\n    @\n}",
+      py = 'def main():\n    @\n\n\nif __name__ == "__main__":\n    main()\n'
+    }
 })
 
---Same thing for the open() function
+--Same thing for the open() function, no parameters required by default
 require"tester".open({
     dir = "vsplit", --If no dir is specified, defaultDir from the setup() function will be used
     type = ".c" --If no type is specified, and current file type isnt in askForType from the setup function, the current type will be used
