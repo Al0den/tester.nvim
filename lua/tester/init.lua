@@ -19,17 +19,16 @@ end
 
 local function create_file(path, type)
     local _, err, _ = os.rename(path, path)
-    local data
     local file = io.open(path, "a")
     if M.opts.defaultContent[type:sub(2)] ~= nil and file ~= nil and err then
         local finalString = M.opts.defaultContent[type:sub(2)]:gsub("@", '')
         file:write(finalString)
-        data = true
+        io.close(file)
+        return true
     else
-        data = false
+        io.close(file)
+        return false
     end
-    io.close(file)
-    return data
 end
 
 local function getCurrentBuffers()
@@ -41,7 +40,7 @@ end
 
 M.isOpened = function()
     for _, buff in pairs(getCurrentBuffers()) do
-        local ok, _ = pcall(vim.api.nvim_buf_get_var, buff, "owner")
+        local ok, _ = pcall(va.nvim_buf_get_var, buff, "owner")
         if ok and vim.fn.bufwinid(buff) ~= -1 then
             return vim.fn.bufwinid(buff)
         end
@@ -59,13 +58,13 @@ M.open = function(args)
         local new = create_file(path .. type, type)
         vim.cmd(dir .. " " .. path .. type)
         local defaultC = M.opts.defaultContent[type:sub(2)]
-        if defaultC ~= nil and string.find(defaultC, "@") ~= nil and new == true then
+        if defaultC ~= nil and string.find(defaultC, "@") ~= nil and new then
             local split = mysplit(defaultC, "@")[1]
             local _, line = split:gsub("\n", "")
             local colum = string.len((mysplit(split, "\n")[line]))
             va.nvim_win_set_cursor(0, { line + 1, colum })
         end
-        vim.api.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
+        va.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
         vim.bo.bufhidden = "delete"
         winbg()
     end
@@ -73,11 +72,11 @@ end
 
 M.clear = function()
     for _, buff in ipairs(getCurrentBuffers()) do
-        local ok, _ = pcall(vim.api.nvim_buf_get_var, buff, "owner")
+        local ok, _ = pcall(va.nvim_buf_get_var, buff, "owner")
         if ok then
-            local ext = getFileExtension(vim.api.nvim_buf_get_name(buff))
+            local ext = getFileExtension(va.nvim_buf_get_name(buff))
             local stat = vim.fn.bufwinid(buff)
-            os.remove(vim.api.nvim_buf_get_name(buff))
+            os.remove(va.nvim_buf_get_name(buff))
             va.nvim_win_close(M.isOpened(), 0)
             if stat ~= 1 then M.open({ type = ext:sub(2) }) end
         end
