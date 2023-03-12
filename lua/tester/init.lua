@@ -18,12 +18,18 @@ local function winbg()
 end
 
 local function create_file(path, type)
+    local _, err, _ = os.rename(path, path)
+    local data
     local file = io.open(path, "a")
-    if M.opts.defaultContent[type:sub(2)] ~= nil and file ~= nil then
+    if M.opts.defaultContent[type:sub(2)] ~= nil and file ~= nil and err then
         local finalString = M.opts.defaultContent[type:sub(2)]:gsub("@", '')
         file:write(finalString)
+        data = true
+    else
+        data = false
     end
     io.close(file)
+    return data
 end
 
 local function getCurrentBuffers()
@@ -50,10 +56,10 @@ M.open = function(args)
     if M.isOpened() then
         vim.fn.win_gotoid(M.isOpened())
     else
-        create_file(path .. type, type)
+        local new = create_file(path .. type, type)
         vim.cmd(dir .. " " .. path .. type)
         local defaultC = M.opts.defaultContent[type:sub(2)]
-        if defaultC ~= nil and string.find(defaultC, "@") ~= nil then
+        if defaultC ~= nil and string.find(defaultC, "@") ~= nil and new == true then
             local split = mysplit(defaultC, "@")[1]
             local _, line = split:gsub("\n", "")
             local colum = string.len((mysplit(split, "\n")[line]))
@@ -73,9 +79,7 @@ M.clear = function()
             local stat = vim.fn.bufwinid(buff)
             os.remove(vim.api.nvim_buf_get_name(buff))
             va.nvim_win_close(M.isOpened(), 0)
-            if stat ~= 1 then
-                M.open({ type = ext })
-            end
+            if stat ~= 1 then M.open({ type = ext }) end
         end
     end
 end

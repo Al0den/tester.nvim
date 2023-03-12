@@ -1,3 +1,5 @@
+local va = vim.api
+
 function file_exists(name)
     local f = io.open(name, "r")
     return f ~= nil and io.close(f)
@@ -45,7 +47,6 @@ function mysplit(inputstr, sep)
 end
 
 return {
-    file_exists = file_exists,
     getFileExtension = getFileExtension,
     has_value = has_value,
     stringStartsWith = stringStartsWith,
