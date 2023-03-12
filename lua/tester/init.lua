@@ -1,22 +1,28 @@
 require("utils")
 require("tester.filetype")
 
+local defaults = require("tester.defaults")
 local va = vim.api
 local path = vim.fn.stdpath("run") .. "/trash"
 
 local M = {}
 
 M.setup = function(opts)
-    M.opts = opts or { dir = "vertical" }
-    M.opts.askForType = M.opts.askForType or { ".tex" }
+    M.opts = opts or defaults.opts
+    M.opts.askForType = M.opts.askForType or defaults.askForType
+    M.opts.defaultContent = M.opts.defaultContent or defaults.defaultContent
 end
 
 local function winbg()
-    vim.cmd [[set winhighlight=Normal:testerNormal,EndOfBuffer:testerNormal,SignColumn:testerNormal ]]
+    vim.cmd [[set winhighlight=EndOfBuffer:testerNormal,SignColumn:testerNormal ]]
 end
 
-local function create_file(path)
-    local file = assert(io.open(path, "w"))
+local function create_file(path, type)
+    local file = io.open(path, "a")
+    if M.opts.defaultContent[type:sub(2)] ~= nil and file ~= nil then
+        local finalString = M.opts.defaultContent[type:sub(2)]:gsub("@", '')
+        file:write(finalString)
+    end
     io.close(file)
 end
 
@@ -44,9 +50,15 @@ M.open = function(args)
     if M.isOpened() then
         vim.fn.win_gotoid(M.isOpened())
     else
-        create_file(path .. type)
+        create_file(path .. type, type)
         vim.cmd(dir .. " " .. path .. type)
-        print(path .. type)
+        local defaultC = M.opts.defaultContent[type:sub(2)]
+        if defaultC ~= nil and string.find(defaultC, "@") ~= nil then
+            local split = mysplit(defaultC, "@")[1]
+            local _, line = split:gsub("\n", "")
+            local colum = string.len((mysplit(split, "\n")[line]))
+            va.nvim_win_set_cursor(0, { line + 1, colum })
+        end
         vim.api.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
         vim.bo.bufhidden = "delete"
         winbg()

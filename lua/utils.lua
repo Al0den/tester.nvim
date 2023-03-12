@@ -33,10 +33,22 @@ local function getCurrentBuffers()
     return bufs
 end
 
+function mysplit(inputstr, sep)
+    if sep == nil then
+        sep = "%s"
+    end
+    local t = {}
+    for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+        table.insert(t, str)
+    end
+    return t
+end
+
 return {
     file_exists = file_exists,
     getFileExtension = getFileExtension,
     has_value = has_value,
     stringStartsWith = stringStartsWith,
-    get_file_name = get_file_name
+    get_file_name = get_file_name,
+    mysplit = mysplit
 }
