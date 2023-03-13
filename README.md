@@ -42,7 +42,7 @@ vim.keymap.set("n", "<leader>tc", require"tester".clear)
 
 The default setup is required and comes with no options at the time being, however some feature are configurable after plugin load
 ```lua
--- The setup() function doesnt need to be called with any parameters, and the defaults are:
+--The default function needs to be called in order to get all the faetures, and the default setup is as such:
 require"tester".setup({
     defaultDir = "vsplit", -- "vsplit" | "split"
     askForType = { ".tex" }, --Any string will work if the files ends with this particular string
