@@ -6,7 +6,7 @@ Simple lightweight plugin for quick testing
 
 Any plugin manager should do the trick, and calling the setup function is mandatory
 
-**packer.nvim**
+[**packer.nvim**](https://github.com/wbthomason/packer.nvim)
 ```lua
 use { 
   "Al0den/tester.nvim",
@@ -16,14 +16,20 @@ use {
 }
 ```
 
-**vim-plug**
+[**vim-plug**](https://github.com/junegunn/vim-plug)
 ```vimscript
 Plug 'Al0den/tester.nvim'
 
 lua << END
 require('tester').setup()
 END
+```
 
+[**dein**](https://github.com/Shougo/dein.vim)
+```lua
+call dein#add('Al0den/tester.nvim')
+
+require("tester").setup()
 ```
 
 Note: Setup function can be called from anywhere at anytime, lazy-loading shouldnt affect it
