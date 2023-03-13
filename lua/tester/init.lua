@@ -1,3 +1,7 @@
+--Fix multiple file opening deleting @ char
+--Not a bug but a feature, file re-editted and not re-created
+--Maybe have cursor repositioning when reopening pre-opened file if file isnt new? Check :messages, causes out of buffer cursor error
+
 require("utils")
 require("tester.filetype")
 
@@ -7,10 +11,15 @@ local path = vim.fn.stdpath("run") .. "/trash"
 
 local M = {}
 
+local alreadyOpened = {}
+
+
+
 M.setup = function(opts)
     M.opts = opts or defaults.opts
     M.opts.askForType = M.opts.askForType or defaults.askForType
     M.opts.defaultContent = M.opts.defaultContent or defaults.defaultContent
+    require("tester.autocmd").initialisation(alreadyOpened)
 end
 
 local function winbg()
@@ -63,14 +72,20 @@ M.open = function(args)
             local _, line = split:gsub("\n", "")
             local colum = string.len((mysplit(split, "\n")[line]))
             va.nvim_win_set_cursor(0, { line + 1, colum })
+        elseif alreadyOpened[type] ~= nil then
+            va.nvim_win_set_cursor(0, alreadyOpened[type].pos)
         end
         va.nvim_buf_set_var(va.nvim_get_current_buf(), "owner", "tester")
         vim.bo.bufhidden = "delete"
         winbg()
+        alreadyOpened[type] = {
+            pos = va.nvim_win_get_cursor(0)
+        }
     end
 end
 
 M.clear = function()
+    alreadyOpened = {}
     for _, buff in ipairs(getCurrentBuffers()) do
         local ok, _ = pcall(va.nvim_buf_get_var, buff, "owner")
         if ok then
