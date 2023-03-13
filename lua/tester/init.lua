@@ -1,7 +1,3 @@
---Fix multiple file opening deleting @ char
---Not a bug but a feature, file re-editted and not re-created
---Maybe have cursor repositioning when reopening pre-opened file if file isnt new? Check :messages, causes out of buffer cursor error
-
 require("utils")
 require("tester.filetype")
 
@@ -12,8 +8,6 @@ local path = vim.fn.stdpath("run") .. "/trash"
 local M = {}
 
 local alreadyOpened = {}
-
-
 
 M.setup = function(opts)
     M.opts = opts or defaults.opts
