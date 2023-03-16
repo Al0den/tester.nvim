@@ -46,7 +46,7 @@ vim.keymap.set("n", "<leader>tc", require"tester".clear)
 
 ## Customization
 
-The default setup is required and comes with no options at the time being, however some feature are configurable after plugin load
+The default setup function needs to be ran before the plugin is correctly usable, and comes with the defaults:
 ```lua
 --The default function needs to be called in order to get all the faetures, and the default setup is as such:
 require"tester".setup({
@@ -67,8 +67,28 @@ require"tester".open({
 
 --If you want to make the tester window more distinguishable from the others, you can use your own highlight group
 vim.api.nvim_set_hl(0, "testerNormal", { bg = "red"})
-
 ```
+
+## Features
+
+Some other functions, mostly for user-addons or convenience are available, and are listed here.
+No options are ever required as arguments in the functions, and will default to the `setup()` function
+
+```lua
+--Write the current file to the specifiec path, if unspecified defaults to the current working directory.
+--Note:  Relative path unsupported, cwd will write the file to the current working directory of the main file
+require"tester".write({ 
+    path = "~/Desktop/TesterFiles/" --For the current working directory, use 'cwd'
+    name = "testerFile"
+})
+
+--Copy the current testing file to the nvim clipboard. 
+require"tester".copy()
+
+--Get the status of the testing file. False if not opened, otherwise returns the window ID of the file
+require"tester".isOpened()
+```
+
 
 
 

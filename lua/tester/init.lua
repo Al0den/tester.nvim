@@ -65,6 +65,7 @@ M.open = function(args)
             local split = mysplit(defaultC, "@")[1]
             local _, line = split:gsub("\n", "")
             local colum = string.len((mysplit(split, "\n")[line]))
+            vim.lsp.buf.format()
             va.nvim_win_set_cursor(0, { line + 1, colum })
         elseif alreadyOpened[type] ~= nil then
             va.nvim_win_set_cursor(0, alreadyOpened[type].pos)
@@ -88,6 +89,41 @@ M.clear = function()
             os.remove(va.nvim_buf_get_name(buff))
             va.nvim_win_close(M.isOpened(), 0)
             if stat ~= 1 then M.open({ type = ext:sub(2) }) end
+        end
+    end
+end
+
+M.copy = function()
+    print("uncoded")
+end
+
+M.write = function(opts)
+    opts.path = opts.path or "cwd"
+    opts.name = opts.name or "testerFile"
+    local testerWinID = M.isOpened()
+    if testerWinID == false then
+        return print("No tester file opened")
+    end
+    if opts.path == "cwd" then
+        opts.path = vim.fn.getcwd()
+    end
+    opts.path = ((opts.path):gsub("~", os.getenv("HOME"))) .. opts.name .. ".c"
+    local _, err = os.rename(opts.path, opts.path)
+    local file = io.open(opts.path, "w+")
+    local content = vim.api.nvim_buf_get_lines(vim.fn.winbufnr(testerWinID), 0, vim.api.nvim_buf_line_count(0), false)
+    if err and file ~= nil then
+        file:write(table.concat(content, "\n"))
+        file:close()
+        print("Saved file to: " .. opts.path)
+    else
+        print("File already exists, overwrite?")
+        local ans = vim.fn.input("[y/n]", "", "file")
+        if ans == "y" and file ~= nil then
+            file:write(table.concat(content, "\n"))
+            file:close()
+            print("Saved file to: " .. opts.path)
+        else
+            print("No data saved/erased")
         end
     end
 end
