@@ -1,6 +1,6 @@
 # tester.nvim
 
-Simple lightweight plugin for quick testing
+Simple lightweight plugin for quick testing inside [neovim](https://neovim.io), easy to setup, use and expand
 
 ## Installation and setup
 
