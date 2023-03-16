@@ -17,7 +17,7 @@ use {
 ```
 
 [**vim-plug**](https://github.com/junegunn/vim-plug)
-```vimscript
+```lua
 Plug 'Al0den/tester.nvim'
 
 lua << END
