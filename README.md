@@ -29,7 +29,9 @@ END
 ```lua
 call dein#add('Al0den/tester.nvim')
 
-require("tester").setup()
+lua << END
+require('tester').setup()
+END
 ```
 
 Note: Setup function can be called from anywhere at anytime, lazy-loading shouldnt affect it
@@ -75,7 +77,7 @@ Some other functions, mostly for user-addons or convenience are available, and a
 No options are ever required as arguments in the functions, and will default to the `setup()` function
 
 ```lua
---Write the current file to the specifiec path, if unspecified defaults to the current working directory.
+--Write the current file to the specified path, if unspecified defaults to the current working directory.
 --Note:  Relative path unsupported, cwd will write the file to the current working directory of the main file
 require"tester".write({ 
     path = "~/Desktop/TesterFiles/" --For the current working directory, use 'cwd'
