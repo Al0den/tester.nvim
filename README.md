@@ -84,12 +84,15 @@ require"tester".write({
     name = "testerFile"
 })
 
---Copy the current testing file to the nvim clipboard. 
-require"tester".copy()
-
 --Get the status of the testing file. False if not opened, otherwise returns the window ID of the file
 require"tester".isOpened()
 ```
+
+## Roadmap
+
+- Add a `copy` function to copy whole file content
+- Add relative path support for `write` function
+- Add custom file headers, especially for C with classic packages included in a single header
 
 
 
