@@ -2,12 +2,12 @@ require("utils")
 require("tester.filetype")
 
 local defaults = require("tester.defaults")
+
 local va = vim.api
 local path = vim.fn.stdpath("run") .. "/trash"
 
-local M = {}
-
 local alreadyOpened = {}
+local M = {}
 
 M.setup = function(opts)
     M.opts = opts or defaults.opts
