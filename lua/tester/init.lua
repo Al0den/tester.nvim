@@ -93,10 +93,6 @@ M.clear = function()
     end
 end
 
-M.copy = function()
-    print("uncoded")
-end
-
 M.write = function(opts)
     opts.path = opts.path or "cwd"
     opts.name = opts.name or "testerFile"
