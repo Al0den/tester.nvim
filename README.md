@@ -34,7 +34,7 @@ require('tester').setup()
 END
 ```
 
-Note: Setup function can be called from anywhere at anytime, lazy-loading shouldnt affect it
+Note: `setup` function can be called from anywhere at anytime, lazy-loading shouldnt affect it
 
 ## How to use
 
