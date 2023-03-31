@@ -86,13 +86,12 @@ require"tester".write({
     name = "testerFile"
 })
 
---Get the status of the testing file. False if not opened, otherwise returns the window ID of the file
+--Get the status of the testing file. False if not opened, otherwise returns the window ID of the window containing the buffer 
 require"tester".isOpened()
 ```
 
 ## Roadmap
 
-- Add a `copy` function to copy whole file content
 - Add relative path support for `write` function
 - Add custom file headers, especially for C with classic packages included in a single header
 
