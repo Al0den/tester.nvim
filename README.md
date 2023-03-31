@@ -62,6 +62,7 @@ require"tester".setup({
       ml = 'let print_bool val = match val with\n    | true -> print_string"true"\n    | false -> print_string"false"\n@\n'
     },
     formatOnOpen = false
+    defaultDir = "vsplit"
 })
 
 --Same thing for the open() function, no parameters required by default

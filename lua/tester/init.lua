@@ -10,11 +10,7 @@ local alreadyOpened = {}
 local M = {}
 
 M.setup = function(opts)
-    M.opts = opts or defaults.opts
-    M.opts.askForType = M.opts.askForType or defaults.askForType
-    M.opts.defaultContent = M.opts.defaultContent or defaults.defaultContent
-    M.opts.formatOnOpen = M.opts.formatOnOpen or defaults.formatOnOpen
-    M.opts.defaultDir = M.opts.defaultDir or defaults.defaultDir
+    M.opts = vim.tbl_deep_extend('force', defaults, opts or {})
     require("tester.autocmd").initialisation(alreadyOpened)
 end
 
