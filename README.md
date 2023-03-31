@@ -60,13 +60,15 @@ require"tester".setup({
       py = 'def main():\n    @\n\n\nif __name__ == "__main__":\n    main()\n'
       html = '<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <meta http-equiv="X-UA-Compatible" content="ie=edge">\n    <title>Testing</title>\n    <link rel="stylesheet" href="style.css">\n  </head>\n  <body>\n     @\n  </body>\n</html>',
       ml = 'let print_bool val = match val with\n    | true -> print_string"true"\n    | false -> print_string"false"\n@\n'
-    }
+    },
+    formatOnOpen = false
 })
 
 --Same thing for the open() function, no parameters required by default
 require"tester".open({
     dir = "vsplit", --If no dir is specified, defaultDir from the setup() function will be used
     type = ".c" --If no type is specified, and current file type isnt in askForType from the setup function, the current type will be used
+    format = false
 })
 
 --If you want to make the tester window more distinguishable from the others, you can use your own highlight group
@@ -93,6 +95,7 @@ require"tester".isOpened()
 ## Roadmap
 
 - Add custom file headers, especially for C with classic packages included in a single header
+Not going to be added in the near future, but if any pull requests come in i'll gladly merge
 
 
 

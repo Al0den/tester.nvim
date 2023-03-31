@@ -10,5 +10,6 @@ M.defaultContent = {
     ml = 'let print_bool val = match val with\n    | true -> print_string"true"\n    | false -> print_string"false"\n@\n'
 }
 M.writeDir = "current"
+M.formatOnOpen = false
 
 return M

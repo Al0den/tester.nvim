@@ -13,6 +13,7 @@ M.setup = function(opts)
     M.opts = opts or defaults.opts
     M.opts.askForType = M.opts.askForType or defaults.askForType
     M.opts.defaultContent = M.opts.defaultContent or defaults.defaultContent
+    M.opts.formatOnOpen = M.opts.formatOnOpen or defaults.formatOnOpen
     require("tester.autocmd").initialisation(alreadyOpened)
 end
 
@@ -55,6 +56,7 @@ M.open = function(args)
     arg = args or {}
     local type = getType(M, arg)
     local dir = arg["dir"] or "vsplit"
+    local format = arg["format"] or M.opts.formatOnOpen
     if M.isOpened() then
         vim.fn.win_gotoid(M.isOpened())
     else
@@ -65,8 +67,8 @@ M.open = function(args)
             local split = mysplit(defaultC, "@")[1]
             local _, line = split:gsub("\n", "")
             local colum = string.len((mysplit(split, "\n")[line]))
-            vim.lsp.buf.format()
             va.nvim_win_set_cursor(0, { line + 1, colum })
+            if format then vim.lsp.buf.format(0) end
         elseif alreadyOpened[type] ~= nil then
             va.nvim_win_set_cursor(0, alreadyOpened[type].pos)
         end
