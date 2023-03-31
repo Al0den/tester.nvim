@@ -92,7 +92,6 @@ require"tester".isOpened()
 
 ## Roadmap
 
-- Add relative path support for `write` function
 - Add custom file headers, especially for C with classic packages included in a single header
 
 
