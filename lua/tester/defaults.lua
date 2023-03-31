@@ -11,5 +11,6 @@ M.defaultContent = {
 }
 M.writeDir = "current"
 M.formatOnOpen = false
+M.defaultDir = "vsplit"
 
 return M
