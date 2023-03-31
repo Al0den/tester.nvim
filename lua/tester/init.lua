@@ -95,15 +95,20 @@ end
 
 M.write = function(opts)
     opts.path = opts.path or "cwd"
-    opts.name = opts.name or "testerFile"
+    opts.name = opts.name or "ask"
+    if opts.name == "ask" then
+        local newName = vim.fn.input("Name:", "", "file")
+        opts.name = newName or "testerFile"
+    end
     local testerWinID = M.isOpened()
     if testerWinID == false then
         return print("No tester file opened")
     end
     if opts.path == "cwd" then
-        opts.path = vim.fn.getcwd()
+        opts.path = vim.fn.getcwd() .. "/"
     end
-    opts.path = ((opts.path):gsub("~", os.getenv("HOME"))) .. opts.name .. ".c"
+    local extension = getFileExtension(va.nvim_buf_get_name(vim.fn.winbufnr(testerWinID)))
+    opts.path = ((opts.path):gsub("~", os.getenv("HOME"))) .. opts.name .. extension
     local _, err = os.rename(opts.path, opts.path)
     local file = io.open(opts.path, "w+")
     local content = vim.api.nvim_buf_get_lines(vim.fn.winbufnr(testerWinID), 0, vim.api.nvim_buf_line_count(0), false)
