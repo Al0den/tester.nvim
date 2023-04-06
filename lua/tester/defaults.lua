@@ -8,7 +8,7 @@ M.defaultContent = {
     html =
     '<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <meta http-equiv="X-UA-Compatible" content="ie=edge">\n    <title>Testing</title>\n    <link rel="stylesheet" href="style.css">\n  </head>\n  <body>\n     @\n  </body>\n</html>',
 }
-M.writeDir = "current"
+M.writeDir = "cwd"
 M.formatOnOpen = false
 M.defaultDir = "vsplit"
 

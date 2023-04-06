@@ -93,7 +93,7 @@ M.clear = function()
 end
 
 M.write = function(opts)
-    opts.path = opts.path or "cwd"
+    opts.path = opts.path or M.writeDir or "cwd"
     opts.name = opts.name or "ask"
     if opts.name == "ask" then
         local newName = vim.fn.input("Name:", "", "file")
@@ -105,6 +105,9 @@ M.write = function(opts)
     end
     if opts.path == "cwd" then
         opts.path = vim.fn.getcwd() .. "/"
+    elseif opts.path == "ask" then
+        local newPath = vim.fn.input("Path:", "", "file")
+        opts.path = newPath
     end
     local extension = getFileExtension(va.nvim_buf_get_name(vim.fn.winbufnr(testerWinID)))
     opts.path = ((opts.path):gsub("~", os.getenv("HOME"))) .. opts.name .. extension
