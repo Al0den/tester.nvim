@@ -93,7 +93,7 @@ M.clear = function()
 end
 
 M.write = function(opts)
-    opts.path = opts.path or M.writeDir or "cwd"
+    opts.path = opts.path or M.writeDir
     opts.name = opts.name or "ask"
     if opts.name == "ask" then
         local newName = vim.fn.input("Name:", "", "file")
