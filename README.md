@@ -95,5 +95,4 @@ require"tester".isOpened()
 
 ## Roadmap
 
-- Add custom file headers, especially for C with classic packages included in a single header
-Not going to be added in the near future, but if any pull requests come in i'll gladly merge
+- Add custom file headers, especially for C with classic packages included in a single header. Not going to be added in the near future, but if any pull requests come in i'll gladly merge
